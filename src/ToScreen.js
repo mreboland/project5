@@ -2,18 +2,20 @@ import React from "react";
 
 const ToScreen = (props) => {
     return (
-        <div>
+        <div className="wrapper">
+            <ul>
             {
             props.genres.map( (data, index) => {
                 console.log(data)
                 return (
-                    <div key={index}>
+                    <li>
                         <h2>{data.Name}</h2>
                         <p>Genre: {data.Type}</p>
-                    </div>
+                    </li>
                 )
             })
             }
+            </ul>
         </div>
     )
 }
