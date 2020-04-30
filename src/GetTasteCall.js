@@ -1,7 +1,7 @@
 import axios from "axios";
 import Qs from "qs"
 
-const GetApiCall = (props) => {
+const GetTasteCall = (props) => {
     return axios({
         url: 'http://proxy.hackeryou.com',
         responseType: 'json',
@@ -13,7 +13,8 @@ const GetApiCall = (props) => {
             reqUrl: 'https://tastedive.com/api/similar',
             params: {
                 k: "366898-NA-YOHJFJWV",
-                q: props
+                q: props,
+                // verbose: 1
             },
             xmlToJSON: false
         }
@@ -27,4 +28,6 @@ const GetApiCall = (props) => {
     // });
 }
 
-export default GetApiCall
+
+
+export default GetTasteCall

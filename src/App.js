@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
-import GetApiCall from "./ApiCall.js";
+import GetTasteCall from "./GetTasteCall.js";
+import GetTasteInfo from "./GetTasteInfo.js";
 import ToScreen from "./ToScreen.js";
 import Intro from "./Intro.js";
-import axios from "axios";
-import Qs from "qs"
+// import Popup from "reactjs-popup"
+// import axios from "axios";
+// import Qs from "qs"
 import './App.css';
 
 class App extends Component {
@@ -12,7 +14,10 @@ class App extends Component {
     super();
     this.state = {
       tastes: [],
-      userInput: ""
+      artistInfo: [],
+      artistName: [],
+      userInput: "",
+      userInputResult: [],
     }
   }
 
@@ -47,16 +52,38 @@ class App extends Component {
     // checking for if userInput is empty, if it's not, proceed with axios call else prompt user to try again
     if (this.state.userInput !== "") {
       //query api here to have it run when empty string is not used then empty string afterwards. Used promised in order to use data here in App, set the axios call to tastes
-      GetApiCall(this.state.userInput).then( (res) => {
+      // by comma seperating the setState the code will run in order.
+      GetTasteCall(this.state.userInput).then( (res) => {
         // console.log(res);
         // console.log(res.data.Similar.Results);
+        
         this.setState({
-          tastes: res.data.Similar.Results
-        })
+          tastes: res.data.Similar.Results          
+        }, () => {
+
+            const artistName = [...this.state.tastes]
+            artistName.map( (map) => {
+              console.log(map)
+              GetTasteInfo(map.Name).then((res) => {
+                // console.log(res);
+                // console.log(res.data.artists)
+
+                this.setState({
+                  artistInfo: res.data.artists
+                }, () => {
+                  // emptying userInput so it doesn't remain in search box after call
+                  
+                  this.setState({
+                    userInput: ""
+                  })
+                }
+
+                )
+              }
+              )
+            })
+            
       })
-      // emptying userInput so it doesn't remain in search box after call
-      this.setState({
-        userInput: ""
       })
     } else {
       alert("Please input a choice");
@@ -73,10 +100,16 @@ class App extends Component {
     })
   }
 
+  togglePopup() {
+    this.setState({
+      showPopup: !this.state.showPopup
+    });
+  }
+
   render() {
     return (
       <div className="App">
-        {/* <GetApiCall /> */}
+        {/* {console.log(this.arrayJoin)} */}
         <section className="start">
           <div>
             <Intro />
@@ -87,7 +120,7 @@ class App extends Component {
           </div>
         </section>
         <section className="list">
-        <ToScreen genres={this.state.tastes}/>
+          <ToScreen genres={this.state.tastes} artistInfo={this.state.artistInfo}/>
         </section>
       </div>
     );
@@ -95,3 +128,4 @@ class App extends Component {
 }
 
 export default App;
+
