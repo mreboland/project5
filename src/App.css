@@ -6,7 +6,7 @@ html { -moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: 
 
 .wrapper {
   max-width: 1080px;
-  width: 90%;
+  width: 100%;
   margin: 0 auto;
   height: 85vh;
   overflow-x: auto;
@@ -30,6 +30,7 @@ img {
 }
 
 ul {
+  /* position: relative; */
   margin: 0;
   padding: 0;
   display: flex;
@@ -51,7 +52,7 @@ ul li {
   list-style-type: none;
   margin: 10px 10px;
   width: 175px;
-  height: 175px;
+  height: 300px;
 }
 
 li button {
@@ -83,3 +84,34 @@ div .popup-content {
 .list {
   margin-bottom: 100px;
 }
+
+.background img  {
+  /* position: relative; */
+  /* position: absolute; */
+  width: 175px;
+  height: 175px;
+  text-indent: -9999px;
+}
+
+.absolute {
+  display: flex;
+  flex-direction: column;
+  /* position: absolute; */
+  color: black;
+  margin: 0 auto;
+  background: rgba(238, 242, 243, 0.5);
+  width: 175px;
+  height: 175px;
+}
+
+.relative {
+  /* position: relative; */
+}
+
+
+.about {
+  max-height: 500px;
+  overflow-x: auto;
+}
+
+

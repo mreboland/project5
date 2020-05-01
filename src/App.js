@@ -53,53 +53,56 @@ class App extends Component {
     if (this.state.userInput !== "") {
       //query api here to have it run when empty string is not used then empty string afterwards. Used promised in order to use data here in App, set the axios call to tastes
       // by comma seperating the setState the code will run in order.
-      GetTasteCall(this.state.userInput).then( (res) => {
+      GetTasteCall(this.state.userInput).then((res) => {
         // console.log(res);
         // console.log(res.data.Similar.Results);
-        
+
         this.setState({
-          tastes: res.data.Similar.Results          
+          tastes: res.data.Similar.Results
         }, () => {
 
-              const artistName = [...this.state.tastes]
-              artistName.map( (map) => {
+          const artistName = [...this.state.tastes]
+          artistName.map((map) => {
+            // console.log(map)
+            GetTasteInfo(map.Name).then( (res) => {
+              // console.log(res);
+              // console.log(res.data.artists)
+
+              // we want append artist info into each artists object
+              // extraInfo is being added to the 'map' info using dot notation
+              map.extraInfo = res.data.artists
               // console.log(map)
-              GetTasteInfo(map.Name).then((res) => {
-                // console.log(res);
-                // console.log(res.data.artists)
-                // if res.data.artist is not null filter then append artistInfo
+              let remove = this.state.tastes;
+              if (res.data.artists === null) {
+                // const remove = this.state.tastes - map.Name
+                // console.log(this.state.tastes);
+                console.log(map.Name);
 
-                // If if is null, remove artist from tastes and re state tastes less the artist that's null 
-                let remove = this.state.tastes;
-                if (res.data.artists === null) {
-                  // const remove = this.state.tastes - map.Name
-                  // console.log(this.state.tastes);
-                  console.log(map.Name);
+                remove = this.state.tastes.filter((obj) => {
+                  return obj.Name !== map.Name;
 
-                    remove = this.state.tastes.filter( (obj) => {
-                    return obj.Name !== map.Name;
-                    
-                  });
-                  console.log(remove);
-                }
-                this.setState({
-                  artistInfo: res.data.artists,
-                  // set tastes to remove once null has been removed
-                  tastes: remove
-                }, () => {
-                  // emptying userInput so it doesn't remain in search box after call
-                  
-                  this.setState({
-                    userInput: ""
-                  })
-                }
-
-                )
+                });
+                console.log(remove);
               }
+              this.setState({
+                artistInfo: res.data.artists,
+                // set tastes to remove once null has been removed
+                tastes: remove
+              }, () => {
+                // emptying userInput so it doesn't remain in search box after call
+
+                this.setState({
+                  userInput: ""
+                })
+                
+              }
+
               )
-            })
-            
-      })
+            }
+            )
+          })
+
+        })
       })
     } else {
       alert("Please input a choice");
@@ -144,4 +147,3 @@ class App extends Component {
 }
 
 export default App;
-
