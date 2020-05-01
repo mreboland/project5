@@ -61,15 +61,31 @@ class App extends Component {
           tastes: res.data.Similar.Results          
         }, () => {
 
-            const artistName = [...this.state.tastes]
-            artistName.map( (map) => {
-              console.log(map)
+              const artistName = [...this.state.tastes]
+              artistName.map( (map) => {
+              // console.log(map)
               GetTasteInfo(map.Name).then((res) => {
                 // console.log(res);
                 // console.log(res.data.artists)
+                // if res.data.artist is not null filter then append artistInfo
 
+                // If if is null, remove artist from tastes and re state tastes less the artist that's null 
+                let remove = this.state.tastes;
+                if (res.data.artists === null) {
+                  // const remove = this.state.tastes - map.Name
+                  // console.log(this.state.tastes);
+                  console.log(map.Name);
+
+                    remove = this.state.tastes.filter( (obj) => {
+                    return obj.Name !== map.Name;
+                    
+                  });
+                  console.log(remove);
+                }
                 this.setState({
-                  artistInfo: res.data.artists
+                  artistInfo: res.data.artists,
+                  // set tastes to remove once null has been removed
+                  tastes: remove
                 }, () => {
                   // emptying userInput so it doesn't remain in search box after call
                   

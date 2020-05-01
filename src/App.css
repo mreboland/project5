@@ -80,4 +80,6 @@ div .popup-content {
   width: 350px !important;
 }
 
-
+.list {
+  margin-bottom: 100px;
+}

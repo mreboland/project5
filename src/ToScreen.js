@@ -14,10 +14,11 @@ const ToScreen = (props) => {
                 // console.log(data)
                 return (
                     <li>
-                        <h1>hello</h1>
-                        {/* <h2>{data.Name}</h2> */}
+                        {/* <h1>hello</h1> */}
+                        <h2>{data.Name}</h2>
                         {/* <p>Genre: {data.Type}</p> */}
                         {/* <a href={data.yUrl} target="_blank">YouTube</a> */}
+                        <p></p>
                         <Popup trigger={<button>About</button>} position="center center">
                             <div className="about">nothing here</div>
                         </Popup>
