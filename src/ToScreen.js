@@ -4,20 +4,10 @@ import Popup from "reactjs-popup"
 const ToScreen = (props) => {
     // console.log(props)
     // const edward = props.genres.concat(props.artistInfo);
-    // console.log(edward)
-    // console.log(props.genres);
+    // // console.log(edward)
+    // console.log(props.genres.extraInfo);
     
-    // test = () => {
-    //     if (props.genres.extraInfo) {
-    //         if (props.genres.extraInfo[0].strBiographyEN === null) {
-    //             return "no info"
-    //         } else {
-    //             return props.genres.extraInfo[0].strBiographyEN
-    //         }
-    //     } else {
-    //         return "Loading"
-    //     }
-    // }
+    
     
     
     return (
@@ -27,8 +17,20 @@ const ToScreen = (props) => {
             {
             props.genres.map( (data, index) => {
                 // console.log(data)
+                const aboutInfo = () => {
+                    if (data.extraInfo) {
+                        // return data.extraInfo[0].strBiographyEN
+                        if (data.extraInfo[0].strBiographyEN === "") {
+                            return data.wTeaser
+                        } else {
+                            return data.extraInfo[0].strBiographyEN
+                        }
+                    } else {
+                        return data.wTeaser
+                    }
+                }
                 return (
-                    <li className="relative">
+                    <li className="relative" key={index}>
                             <div className="background">
                             <img src={
                             data.extraInfo 
@@ -41,11 +43,12 @@ const ToScreen = (props) => {
                                 {/* <a href={data.yUrl} target="_blank">YouTube</a> */}
                                 <Popup trigger={<button>About</button>} position="center center">
                                     <div className="about">{
-                                        // this.test()
+                                        aboutInfo()
 
-                                    data.extraInfo 
-                                    ? data.extraInfo[0].strBiographyEN
-                                    : "Loading"
+                                    // data.extraInfo 
+                                    // ? data.extraInfo[0].strBiographyEN
+                                    // : "Loading"
+
                                     }</div>
                                 </Popup>
                             </div>

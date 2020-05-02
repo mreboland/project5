@@ -3,10 +3,12 @@ import GetTasteCall from "./GetTasteCall.js";
 import GetTasteInfo from "./GetTasteInfo.js";
 import ToScreen from "./ToScreen.js";
 import Intro from "./Intro.js";
+
 // import Popup from "reactjs-popup"
 // import axios from "axios";
 // import Qs from "qs"
 import './App.css';
+import GetBookInfo from './GetBookInfo.js';
 
 class App extends Component {
 
@@ -15,36 +17,13 @@ class App extends Component {
     this.state = {
       tastes: [],
       artistInfo: [],
-      artistName: [],
+      bookInfo: [],
       userInput: "",
-      userInputResult: [],
     }
+    this.myDivToFocus = React.createRef()
   }
 
-  // componentDidMount() {
-  //   axios({
-  //     url: 'http://proxy.hackeryou.com',
-  //     responseType: 'json',
-  //     method: "GET",
-  //     paramsSerializer: function (params) {
-  //       return Qs.stringify(params, { arrayFormat: 'brackets' })
-  //     },
-  //     params: {
-  //       reqUrl: 'https://tastedive.com/api/similar',
-  //       params: {
-  //         k: "366898-NA-YOHJFJWV",
-  //         q: "red hot chili peppers"
-  //       },
-  //       xmlToJSON: false
-  //     }
-  //   }).then((res) => {
-  //     console.log(res);
-  //     // console.log(res.data.Similar.Results);
-  //     this.setState({
-  //       // tastes: res.data.Similar.Results
-  //     })
-  //   });
-  // }
+  
 
   handleSubmit = (event) => {
     //prevent page refresh on form submit
@@ -55,65 +34,89 @@ class App extends Component {
       // by comma seperating the setState the code will run in order.
       GetTasteCall(this.state.userInput).then((res) => {
         // console.log(res);
-        // console.log(res.data.Similar.Results);
+        console.log(res.data.Similar.Results);
 
         this.setState({
-          tastes: res.data.Similar.Results
+          tastes: res.data.Similar.Results,
+          bookInfo: res.data.Similar.Results
         }, () => {
 
+          
           const artistName = [...this.state.tastes]
           artistName.map((map) => {
             // console.log(map)
-            GetTasteInfo(map.Name).then( (res) => {
-              // console.log(res);
-              // console.log(res.data.artists)
 
-              // we want append artist info into each artists object
-              // extraInfo is being added to the 'map' info using dot notation
-              map.extraInfo = res.data.artists
-              // console.log(map)
-              let remove = this.state.tastes;
-              if (res.data.artists === null) {
-                // const remove = this.state.tastes - map.Name
-                // console.log(this.state.tastes);
-                console.log(map.Name);
-
-                remove = this.state.tastes.filter((obj) => {
-                  return obj.Name !== map.Name;
-
-                });
-                console.log(remove);
+            if (map.Type === "music") {
+              GetTasteInfo(map.Name).then( (res) => {
+                // console.log(res);
+                console.log(res.data.artists)
+  
+                // we want append artist info into each artists object
+                // extraInfo is being added to the 'map' info using dot notation
+                map.extraInfo = res.data.artists
+                // console.log(map)
+                let remove = this.state.tastes;
+                if (res.data.artists === null) {
+                  // const remove = this.state.tastes - map.Name
+                  // console.log(this.state.tastes);
+                  // console.log(map.Name);
+  
+                  remove = this.state.tastes.filter((obj) => {
+                    return obj.Name !== map.Name;
+  
+                  });
+                  // console.log(remove);
+                }
+                this.setState({
+                  artistInfo: res.data.artists,
+                  // set tastes to remove once null has been removed
+                  tastes: remove
+                }, () => {
+                  // emptying userInput so it doesn't remain in search box after call
+  
+                  this.setState({
+                    userInput: ""
+                  })
+                  
+                }
+                )
               }
-              this.setState({
-                artistInfo: res.data.artists,
-                // set tastes to remove once null has been removed
-                tastes: remove
-              }, () => {
-                // emptying userInput so it doesn't remain in search box after call
+              )
+              // end of if statement bracket
+            } else if (map.Type === "book") {
+              // console.log(map)
+
+              GetBookInfo(map.Name).then( (res) => {
+                // console.log(res.data);
+
+                // const convert = require('xml-js');
+                // const result1 = convert.xml2json(res.data, { compact: true, spaces: 4 });
+                // // const result2 = convert.xml2json(res.data, { compact: false, spaces: 4 });
+                // console.log(result1._cdata);
+
+                map.bookInfo = res.data;
 
                 this.setState({
                   userInput: ""
                 })
-                
-              }
+              })
+            } else if (map.Type === "movie") {
 
-              )
+              this.setState({
+                userInput: ""
+              })
             }
-            )
           })
-
         })
       })
     } else {
       alert("Please input a choice");
     }
+    
   }
 
   // Take the value of what the user is typing and set it to the userInput state.
   handleUserInput = (event) => {
-    // console.log(event)
-    // console.log(event.target)
-    // console.log(event.target.value)
     this.setState({
       userInput: event.target.value
     })
@@ -125,6 +128,23 @@ class App extends Component {
     });
   }
 
+  onClickEvent = (event) => {
+    //.current is verification that your element has rendered
+    if (this.myDivToFocus.current) {
+      this.myDivToFocus.current.scrollIntoView({
+        behavior: "smooth",
+        block: "nearest"
+      })
+    }
+  }
+
+  handleOnSubmit = (event) => {
+    this.handleSubmit(event)
+    setTimeout( () => {
+      this.onClickEvent();
+    }, 1000)
+  }
+
   render() {
     return (
       <div className="App">
@@ -132,14 +152,15 @@ class App extends Component {
         <section className="start">
           <div>
             <Intro />
-            <form action="" onSubmit={this.handleSubmit}>
+            <form action="" onSubmit={this.handleOnSubmit}>
               <input type="text" value={this.state.userInput} onChange={this.handleUserInput}/>
-              <button type="submit">Search</button>
+              <button type="submit" onClick={this.onClickEvent}>Search</button>
             </form>
+            <p className="note wrapper">Do note, the app will generate a list for all searches, however detailed info only works on music so far</p>
           </div>
         </section>
-        <section className="list">
-          <ToScreen genres={this.state.tastes} artistInfo={this.state.artistInfo}/>
+        <section className="list" ref={this.myDivToFocus}>
+          <ToScreen genres={this.state.tastes}/>
         </section>
       </div>
     );

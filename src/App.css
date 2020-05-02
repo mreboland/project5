@@ -8,8 +8,8 @@ html { -moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: 
   max-width: 1080px;
   width: 100%;
   margin: 0 auto;
-  height: 85vh;
-  overflow-x: auto;
+  /* height: 85vh; */
+  /* overflow-x: auto; */
 }
 
 .App {
@@ -30,27 +30,19 @@ img {
 }
 
 ul {
-  /* position: relative; */
   margin: 0;
   padding: 0;
   display: flex;
-  justify-content: center;
+  justify-content: space-evenly;
   align-items: center;
   flex-wrap: wrap;
-  /* height: 100%; */
-
-}
-
-div {
-  /* overflow-x: auto; */
-
 }
 
 ul li {
   display: flex;
   flex-direction: column;
   list-style-type: none;
-  margin: 10px 10px;
+  margin: 25px 10px;
   width: 175px;
   height: 300px;
 }
@@ -81,13 +73,7 @@ div .popup-content {
   width: 350px !important;
 }
 
-.list {
-  margin-bottom: 100px;
-}
-
 .background img  {
-  /* position: relative; */
-  /* position: absolute; */
   width: 175px;
   height: 175px;
   text-indent: -9999px;
@@ -96,12 +82,16 @@ div .popup-content {
 .absolute {
   display: flex;
   flex-direction: column;
-  /* position: absolute; */
   color: black;
   margin: 0 auto;
-  background: rgba(238, 242, 243, 0.5);
+  background: rgba(238, 242, 243, 0.9);
   width: 175px;
   height: 175px;
+}
+
+.absolute p {
+  margin-top: 10px;
+  margin-bottom: 0px;
 }
 
 .relative {
@@ -114,4 +104,34 @@ div .popup-content {
   overflow-x: auto;
 }
 
+.start {
+  background-image: url(./styles/index1.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.start form {
+  background: rgba(238, 242, 243, 0.9);
+  padding-bottom: 10px;
+}
+
+.introInner {
+  background: rgba(238, 242, 243, 0.9);
+}
+.introInner h2 {
+  margin: 20px 0;
+}
+
+.introInner p {
+  margin-bottom: 0;
+}
+
+.list {
+  background-image: url(./styles/index2.jpg);
+}
+
+.note {
+  background: rgba(238, 242, 243, 0.9);
+  margin-top: 0px;
+}
 

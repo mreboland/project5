@@ -1,20 +1,20 @@
 import axios from "axios";
 import Qs from "qs"
 
-const GetTasteCall = (props) => {
+const GetBookInfo = (props) => {
+
     return axios({
         url: 'https://proxy.hackeryou.com',
-        responseType: 'json',
+        responseType: 'jsonp',
         method: "GET",
         paramsSerializer: function (params) {
             return Qs.stringify(params, { arrayFormat: 'brackets' })
         },
         params: {
-            reqUrl: 'https://tastedive.com/api/similar',
+            reqUrl: "https://www.goodreads.com/search/index.xml",
             params: {
-                k: "366898-NA-YOHJFJWV",
+                key: "kIJlbpC9jOud3psLARUQQ",
                 q: props,
-                verbose: 1
             },
             xmlToJSON: false
         }
@@ -28,6 +28,4 @@ const GetTasteCall = (props) => {
     // });
 }
 
-
-
-export default GetTasteCall
+export default GetBookInfo;
