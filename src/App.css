@@ -21,6 +21,9 @@ html { -moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: 
   height: 100vh;
   justify-content: center;
   align-items: center;
+  background-image: url(./styles/index1.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 img {
@@ -31,7 +34,7 @@ ul {
   margin: 0;
   padding: 0;
   display: flex;
-  justify-content: space-between;
+  justify-content: space-evenly;
   align-items: center;
   flex-wrap: wrap;
 }
@@ -67,10 +70,6 @@ a {
   text-decoration: none;
 }
 
-div .popup-content {
-  /* width: 300px !important; */
-}
-
 .background img  {
   width: 175px;
   height: 175px;
@@ -100,12 +99,6 @@ div .popup-content {
 .about {
   max-height: 500px;
   overflow-x: auto;
-}
-
-.start {
-  background-image: url(./styles/index1.jpg);
-  background-repeat: no-repeat;
-  background-size: cover;
 }
 
 .start form {

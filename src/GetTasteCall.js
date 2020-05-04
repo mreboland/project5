@@ -15,7 +15,6 @@ const GetTasteCall = (props) => {
                 k: "366898-NA-YOHJFJWV",
                 q: props,
                 verbose: 1,
-                limit: 18,
             },
             xmlToJSON: false
         }

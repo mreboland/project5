@@ -73,6 +73,11 @@ class App extends Component {
             } else if (map.Type === "book") {
 
               GetBookInfo(map.Name).then( (res) => {
+                // Below data is for converting xml to json for api. Not a great solution as the browser doesn't read it properly. Need to come back to this to learn more on XML.
+                // const convert = require('xml-js');
+                // const result1 = convert.xml2json(res.data, { compact: true, spaces: 4 });
+                // // const result2 = convert.xml2json(res.data, { compact: false, spaces: 4 });
+                // console.log(result1._cdata);
 
                 map.bookInfo = res.data;
 
@@ -124,13 +129,13 @@ class App extends Component {
     return (
       <div className="App">
         <section className="start">
-          <div>
+          <div className="wrapper">
             <Intro />
-            <form action="" onSubmit={this.handleOnSubmit} className="wrapper">
+            <form action="" onSubmit={this.handleOnSubmit}>
               <input type="text" value={this.state.userInput} onChange={this.handleUserInput}/>
               <button type="submit" onClick={this.onClickEvent}>Search</button>
             </form>
-            <p className="note wrapper">Do note, the app will generate a list for all searches, however detailed info only works on music so far</p>
+            <p className="note">Do note, the app will generate a list for all searches, however detailed info only works on music so far</p>
           </div>
         </section>
         <section className="list" ref={this.myDivToFocus}>
