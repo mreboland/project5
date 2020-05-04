@@ -126,6 +126,8 @@ div .popup-content {
 
 .list {
   background-image: url(./styles/index2.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 .note {
