@@ -2,24 +2,14 @@ import React from "react";
 import Popup from "reactjs-popup"
 
 const ToScreen = (props) => {
-    // console.log(props)
-    // const edward = props.genres.concat(props.artistInfo);
-    // // console.log(edward)
-    // console.log(props.genres.extraInfo);
-    
-    
-    
-    
     return (
-        <div className="wrapper">
-            
+        <div className="wrapper">            
             <ul>
             {
             props.genres.map( (data, index) => {
-                // console.log(data)
+                // if statement to check for wording. If no wording, pull data from another api.
                 const aboutInfo = () => {
                     if (data.extraInfo) {
-                        // return data.extraInfo[0].strBiographyEN
                         if (data.extraInfo[0].strBiographyEN === "") {
                             return data.wTeaser
                         } else {
@@ -28,6 +18,20 @@ const ToScreen = (props) => {
                     } else {
                         return data.wTeaser
                     }
+                }
+                // if statement to add youtube link if there is a string.
+                const aboutTube = () => {
+                    if (data) {
+                        if (data.yUrl === null) {
+                            return hidden()
+                        } else {
+                            return data.yUrl
+                        }
+                    }
+                }
+                // used to add class name to hide youtube link if no info is there.
+                const hidden = () => {
+                    return "hidden"
                 }
                 return (
                     <li className="relative" key={index}>
@@ -40,15 +44,10 @@ const ToScreen = (props) => {
                             <div className="absolute">
                                 <h2>{data.Name}</h2>
                                 <p>Genre: {data.Type}</p>
-                                {/* <a href={data.yUrl} target="_blank">YouTube</a> */}
+                                <a href={aboutTube()} target="_blank" className={aboutTube()} rel="noopener noreferrer">YouTube</a>
                                 <Popup trigger={<button>About</button>} position="center center">
                                     <div className="about">{
                                         aboutInfo()
-
-                                    // data.extraInfo 
-                                    // ? data.extraInfo[0].strBiographyEN
-                                    // : "Loading"
-
                                     }</div>
                                 </Popup>
                             </div>

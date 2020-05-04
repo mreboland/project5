@@ -6,10 +6,8 @@ html { -moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: 
 
 .wrapper {
   max-width: 1080px;
-  width: 100%;
+  width: 90%;
   margin: 0 auto;
-  /* height: 85vh; */
-  /* overflow-x: auto; */
 }
 
 .App {
@@ -33,7 +31,7 @@ ul {
   margin: 0;
   padding: 0;
   display: flex;
-  justify-content: space-evenly;
+  justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
 }
@@ -42,7 +40,7 @@ ul li {
   display: flex;
   flex-direction: column;
   list-style-type: none;
-  margin: 25px 10px;
+  margin: 25px 0px;
   width: 175px;
   height: 300px;
 }
@@ -70,7 +68,7 @@ a {
 }
 
 div .popup-content {
-  width: 350px !important;
+  /* width: 300px !important; */
 }
 
 .background img  {
@@ -94,10 +92,10 @@ div .popup-content {
   margin-bottom: 0px;
 }
 
-.relative {
-  /* position: relative; */
+.absolute a {
+  margin-top: 10px;
+  color: black;
 }
-
 
 .about {
   max-height: 500px;
@@ -135,3 +133,60 @@ div .popup-content {
   margin-top: 0px;
 }
 
+.hidden {
+  display: none;
+}
+
+.introInner p {
+  padding-bottom: 5px;
+}
+
+
+
+@media only screen and (min-width : 220px) and (max-width : 395px) {/*--- Mobile portrait ---*/
+
+  ul {
+    justify-content: center;
+  }
+
+  div .popup-content {
+  width: 250px !important;
+}
+
+}
+
+@media only screen and (min-width : 395px) and (max-width : 920px) {/*--- Mobile portrait ---*/
+
+
+  div .popup-content {
+  width: 250px !important;
+}
+
+}
+
+
+@media only screen and (min-width : 920px) {/*--- Mobile portrait ---*/
+
+  div .popup-content {
+  width: 250px !important;
+}
+
+
+
+}
+
+@media only screen and (min-width : 1080px) {/*--- Mobile portrait ---*/
+
+  div .popup-content {
+  width: 275px !important;
+}
+
+}
+
+@media only screen and (min-width : 1200px) {/*--- Mobile portrait ---*/
+
+  div .popup-content {
+  width: 300px !important;
+}
+
+}

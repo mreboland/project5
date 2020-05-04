@@ -33,9 +33,6 @@ class App extends Component {
       //query api here to have it run when empty string is not used then empty string afterwards. Used promised in order to use data here in App, set the axios call to tastes
       // by comma seperating the setState the code will run in order.
       GetTasteCall(this.state.userInput).then((res) => {
-        // console.log(res);
-        console.log(res.data.Similar.Results);
-
         this.setState({
           tastes: res.data.Similar.Results,
           bookInfo: res.data.Similar.Results
@@ -44,28 +41,21 @@ class App extends Component {
           
           const artistName = [...this.state.tastes]
           artistName.map((map) => {
-            // console.log(map)
 
             if (map.Type === "music") {
               GetTasteInfo(map.Name).then( (res) => {
-                // console.log(res);
-                console.log(res.data.artists)
   
                 // we want append artist info into each artists object
                 // extraInfo is being added to the 'map' info using dot notation
                 map.extraInfo = res.data.artists
-                // console.log(map)
+                // using if statement to check for null data and to filter it out so it doesn't cause display issues.
                 let remove = this.state.tastes;
                 if (res.data.artists === null) {
-                  // const remove = this.state.tastes - map.Name
-                  // console.log(this.state.tastes);
-                  // console.log(map.Name);
   
                   remove = this.state.tastes.filter((obj) => {
                     return obj.Name !== map.Name;
   
                   });
-                  // console.log(remove);
                 }
                 this.setState({
                   artistInfo: res.data.artists,
@@ -73,26 +63,16 @@ class App extends Component {
                   tastes: remove
                 }, () => {
                   // emptying userInput so it doesn't remain in search box after call
-  
                   this.setState({
                     userInput: ""
                   })
-                  
                 }
                 )
               }
               )
-              // end of if statement bracket
             } else if (map.Type === "book") {
-              // console.log(map)
 
               GetBookInfo(map.Name).then( (res) => {
-                // console.log(res.data);
-
-                // const convert = require('xml-js');
-                // const result1 = convert.xml2json(res.data, { compact: true, spaces: 4 });
-                // // const result2 = convert.xml2json(res.data, { compact: false, spaces: 4 });
-                // console.log(result1._cdata);
 
                 map.bookInfo = res.data;
 
@@ -122,12 +102,6 @@ class App extends Component {
     })
   }
 
-  togglePopup() {
-    this.setState({
-      showPopup: !this.state.showPopup
-    });
-  }
-
   onClickEvent = (event) => {
     //.current is verification that your element has rendered
     if (this.myDivToFocus.current) {
@@ -138,6 +112,7 @@ class App extends Component {
     }
   }
 
+  // Need to run 2 functions on form submit. so I put them into their own function so I can call both
   handleOnSubmit = (event) => {
     this.handleSubmit(event)
     setTimeout( () => {
@@ -148,11 +123,10 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        {/* {console.log(this.arrayJoin)} */}
         <section className="start">
           <div>
             <Intro />
-            <form action="" onSubmit={this.handleOnSubmit}>
+            <form action="" onSubmit={this.handleOnSubmit} className="wrapper">
               <input type="text" value={this.state.userInput} onChange={this.handleUserInput}/>
               <button type="submit" onClick={this.onClickEvent}>Search</button>
             </form>

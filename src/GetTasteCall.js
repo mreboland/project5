@@ -19,13 +19,6 @@ const GetTasteCall = (props) => {
             xmlToJSON: false
         }
     })
-    // .then((res) => {
-    //     console.log(res);
-    //     // console.log(res.data.Similar.Results);
-    //     // this.setState({
-    //     //     tastes: res.data.Similar.Results
-    //     // })
-    // });
 }
 
 

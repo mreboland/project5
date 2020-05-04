@@ -2,7 +2,7 @@ import axios from "axios";
 import Qs from "qs"
 
 const GetBookInfo = (props) => {
-
+    // The below returns XML as a result couldn't work with the data in time to populate more book info properly
     return axios({
         url: 'https://proxy.hackeryou.com',
         responseType: 'jsonp',
@@ -19,13 +19,6 @@ const GetBookInfo = (props) => {
             xmlToJSON: false
         }
     })
-    // .then((res) => {
-    //     console.log(res);
-    //     // console.log(res.data.Similar.Results);
-    //     // this.setState({
-    //     //     tastes: res.data.Similar.Results
-    //     // })
-    // });
 }
 
 export default GetBookInfo;
