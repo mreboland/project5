@@ -23,11 +23,14 @@ const ToScreen = (props) => {
                 }
                 // if statement to add youtube link if there is a string.
                 const aboutTube = () => {
+                    // checking if any data is avail
                     if (data) {
                         if (data.yUrl === null) {
                             return hidden()
+                            // if movieInfo is there (true) return something. This code is redundant for the time being, left in case API return normal functions lost
                         } else if (data.movieInfo) {
                             return hidden()
+                            // below needs to return youtube link if api functionality returns
                         } else {
                             return hidden()
                         }

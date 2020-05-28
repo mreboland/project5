@@ -43,11 +43,10 @@ class App extends Component {
           
           const artistName = [...this.state.tastes]
           artistName.map((map) => {
-            // console.log(map)
 
             if (map.Type === "music") {
               GetTasteInfo(map.Name).then( (res) => {
-                // console.log(res)
+
                 // we want append artist info into each artists object
                 // extraInfo is being added to the 'map' info using dot notation
                 map.extraInfo = res.data.artists
@@ -59,7 +58,6 @@ class App extends Component {
                     return obj.Name !== map.Name;  
                   });
                 }
-                console.log(remove)
                 this.setState({
                   artistInfo: res.data.artists,
                   // set tastes to remove once null has been removed
@@ -89,14 +87,12 @@ class App extends Component {
                 })
               })
             } else if (map.Type === "movie") {
-              // console.log(map)
               GetMovieInfo(map.Name).then( (res) => {
-                console.log(res.data)
                 
+                // appending movie info from api call to map which is data from this.state.tastes that has been spread (...)
                 map.movieInfo = res.data
                 
                 let remove = this.state.tastes;
-                // console.log(remove)
                 if (res.data === null) {
                   remove = this.state.tastes.filter((obj) => {
                     return obj.Name !== map.Name;

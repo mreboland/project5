@@ -14,6 +14,7 @@ const GetTasteCall = (props) => {
             params: {
                 k: "366898-NA-YOHJFJWV",
                 q: props,
+                // API function loss, left verbose in case it comes back
                 // verbose: 1,
             },
             xmlToJSON: false
