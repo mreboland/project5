@@ -15,8 +15,10 @@ const ToScreen = (props) => {
                         } else {
                             return data.extraInfo[0].strBiographyEN
                         }
+                    } else if (data.movieInfo) {
+                        return data.movieInfo.Plot
                     } else {
-                        return data.wTeaser
+                        return data.Name
                     }
                 }
                 // if statement to add youtube link if there is a string.
@@ -24,8 +26,10 @@ const ToScreen = (props) => {
                     if (data) {
                         if (data.yUrl === null) {
                             return hidden()
+                        } else if (data.movieInfo) {
+                            return hidden()
                         } else {
-                            return data.yUrl
+                            return hidden()
                         }
                     }
                 }
@@ -33,13 +37,24 @@ const ToScreen = (props) => {
                 const hidden = () => {
                     return "hidden"
                 }
+
+                const imgAdd = () => {
+                    if (data) {
+                        if (data.extraInfo) {
+                            return data.extraInfo[0].strArtistThumb
+                        } else if (data.movieInfo) {
+                            return data.movieInfo.Poster
+                        }
+                    } else {
+                        return "loading"
+                    }
+                }
                 return (
                     <li className="relative" key={index}>
                             <div className="background">
                             <img src={
-                            data.extraInfo 
-                            ? data.extraInfo[0].strArtistThumb
-                            : "loading"} 
+                                imgAdd()
+                            } 
                             alt={data.Name}/></div>
                             <div className="absolute">
                                 <h2>{data.Name}</h2>

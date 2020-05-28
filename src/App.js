@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import GetTasteCall from "./GetTasteCall.js";
 import GetTasteInfo from "./GetTasteInfo.js";
+import GetMovieInfo from "./GetMovieInfo.js"
 import ToScreen from "./ToScreen.js";
 import Intro from "./Intro.js";
 
@@ -19,6 +20,7 @@ class App extends Component {
       artistInfo: [],
       bookInfo: [],
       userInput: "",
+      movies: [],
     }
     this.myDivToFocus = React.createRef()
   }
@@ -41,10 +43,11 @@ class App extends Component {
           
           const artistName = [...this.state.tastes]
           artistName.map((map) => {
+            // console.log(map)
 
             if (map.Type === "music") {
               GetTasteInfo(map.Name).then( (res) => {
-  
+                // console.log(res)
                 // we want append artist info into each artists object
                 // extraInfo is being added to the 'map' info using dot notation
                 map.extraInfo = res.data.artists
@@ -53,10 +56,10 @@ class App extends Component {
                 if (res.data.artists === null) {
   
                   remove = this.state.tastes.filter((obj) => {
-                    return obj.Name !== map.Name;
-  
+                    return obj.Name !== map.Name;  
                   });
                 }
+                console.log(remove)
                 this.setState({
                   artistInfo: res.data.artists,
                   // set tastes to remove once null has been removed
@@ -68,8 +71,8 @@ class App extends Component {
                   })
                 }
                 )
-              }
-              )
+              })
+
             } else if (map.Type === "book") {
 
               GetBookInfo(map.Name).then( (res) => {
@@ -78,7 +81,7 @@ class App extends Component {
                 // const result1 = convert.xml2json(res.data, { compact: true, spaces: 4 });
                 // // const result2 = convert.xml2json(res.data, { compact: false, spaces: 4 });
                 // console.log(result1._cdata);
-
+                
                 map.bookInfo = res.data;
 
                 this.setState({
@@ -86,10 +89,33 @@ class App extends Component {
                 })
               })
             } else if (map.Type === "movie") {
+              // console.log(map)
+              GetMovieInfo(map.Name).then( (res) => {
+                console.log(res.data)
+                
+                map.movieInfo = res.data
+                
+                let remove = this.state.tastes;
+                // console.log(remove)
+                if (res.data === null) {
+                  remove = this.state.tastes.filter((obj) => {
+                    return obj.Name !== map.Name;
+                    
+                  });
+                }
+                this.setState({
+                  tastes: remove,
+                }, () => {
+                    // emptying userInput so it doesn't remain in search box after call
+                    this.setState({
+                      userInput: ""
+                    })
+                })
 
-              this.setState({
-                userInput: ""
+                
               })
+
+              
             }
           })
         })
@@ -135,11 +161,11 @@ class App extends Component {
               <input type="text" value={this.state.userInput} onChange={this.handleUserInput}/>
               <button type="submit" onClick={this.onClickEvent}>Search</button>
             </form>
-            <p className="note">Do note, the app will generate a list for all searches, however detailed info only works on music so far</p>
+            <p className="note">API recently lost some functionality (no Youtube/trailers, books no longer work). This loss of functionality results in empty searches on occasion as the API doesn't generate a list.</p>
           </div>
         </section>
         <section className="list" ref={this.myDivToFocus}>
-          <ToScreen genres={this.state.tastes}/>
+          <ToScreen genres={this.state.tastes} movies={this.state.movies}/>
         </section>
       </div>
     );

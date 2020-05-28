@@ -1,7 +1,7 @@
 import axios from "axios";
 import Qs from "qs"
 
-const GetTasteCall = (props) => {
+const GetMovieInfo = (props) => {
     return axios({
         url: 'https://proxy.hackeryou.com',
         responseType: 'json',
@@ -10,19 +10,14 @@ const GetTasteCall = (props) => {
             return Qs.stringify(params, { arrayFormat: 'brackets' })
         },
         params: {
-            reqUrl: 'https://tastedive.com/api/similar',
+            reqUrl: "http://www.omdbapi.com/",
             params: {
-                k: "366898-NA-YOHJFJWV",
-                q: props,
-                // verbose: 1,
+                apikey: "f6bf7cc4",
+                t: props,
             },
             xmlToJSON: false
         }
     })
-
 }
 
-
-
-
-export default GetTasteCall
+export default GetMovieInfo;
